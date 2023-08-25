@@ -16,6 +16,10 @@ function App() {
   
   const previousPictures = () => {
     setFirst((first => {
+
+// здесь почему-то выдаёт ошибку, когда ставишь -3 (минус 3)
+      // и во всех аналогичных строках, где -3 и +3
+      
       first --;     
       return first;
     }));
