@@ -1,25 +1,83 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { data } from './data';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const [first, setFirst] = useState(0);
+  const [second, setSecond] = useState(3);
+  const [third, setThird] = useState(6);
+
+  const removePicture = (id) => {
+    let newPictures = first.filter(image => image.id !== id);
+    setFirst(newPictures);
+
+  }
+
+  
+  const previousPictures = () => {
+    setFirst((first => {
+      first --;     
+      return first;
+    }));
+
+    setSecond ((second => {
+      second --;
+      return second;
+    }));
+    
+    setThird ((third => {
+      third --;
+      return third;
+    }))
+  }
+
+  const nextPictures = () => {
+    setFirst((first => {
+      first ++;
+      return first;
+    }));
+    setSecond((second => {
+      second ++;
+      return second;
+    }));
+    setThird((third => {
+      third ++;
+      return third;
+    }))
+  }
+
+  return(
+    
+    <div>
+      
+      <div className='container'>
+        <h1>Какая картинка лишняя?</h1>
+      </div>
+
+      <div className='containerPictures'>
+        {data.slice(first, second, third).map((picture => {
+        const {id, image, description} = picture;
+
+          return(
+            <div key={id}>
+              <div >
+                <img src={image} width="350px" alt='Pictures'/>
+              </div>
+              <div className='container'>
+                <h3>{id} - {description}</h3>
+              </div>
+              <div className='container'>
+                <button onClick={() => removePicture(id)} className='btn-del'>Удалить</button>
+              </div>
+            </div>)
+      }))}
+</div>
+      <div className='container btn'>
+        <button className='btn-option' onClick={previousPictures}>Назад</button>
+        <button className='btn-option' onClick={nextPictures}>Вперед</button>
+      </div>
     </div>
-  );
+  )
 }
 
 export default App;
